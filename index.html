@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verification | Human Check</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    margin:0;
+    font-family: 'Segoe UI', 'Poppins', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    cursor:pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+/* animated particle effect */
+body::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 40%, rgba(255,215,0,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0,255,200,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container{
+    background: linear-gradient(145deg, #ffffff 0%, #fffef7 100%);
+    width: 420px;
+    max-width: 92%;
+    padding: 38px 30px;
+    border-radius: 56px;
+    box-shadow: 0 30px 50px rgba(0,0,0,0.3), 0 0 0 2px rgba(255,220,150,0.5) inset, 0 10px 25px rgba(0,0,0,0.2);
+    text-align:center;
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    position: relative;
+    z-index: 2;
+    backdrop-filter: blur(0px);
+}
+
+.container:hover {
+    transform: scale(1.01);
+}
+
+/* top icons area - LARGER, BOLDER */
+.top-icons{
+    display:flex;
+    justify-content:space-between;
+    gap: 25px;
+    margin-bottom: 28px;
+}
+
+.icon-box{
+    text-align:center;
+    background: linear-gradient(125deg, #fff9f0, #fff4e6);
+    padding: 18px 12px;
+    border-radius: 70px;
+    flex: 1;
+    transition: all 0.25s ease;
+    box-shadow: 0 12px 20px rgba(0,0,0,0.08), 0 2px 0 #ffd966 inset;
+    border: 1px solid #ffe5b4;
+}
+
+.icon-box:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(135deg, #ffffff, #fff0dd);
+    box-shadow: 0 18px 28px rgba(0,0,0,0.12);
+}
+
+.icon{
+    font-size: 52px;
+    filter: drop-shadow(2px 6px 12px rgba(0,0,0,0.15));
+    margin-bottom: 8px;
+    display: block;
+}
+
+.tick{
+    color: #1f8a4c;
+    font-weight: 800;
+    background: linear-gradient(95deg, #d9f0e3, #c8e6d9);
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 60px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 6px rgba(31,138,76,0.2);
+    font-weight: bold;
+}
+
+.cross{
+    color: #d43f1f;
+    font-weight: 800;
+    background: linear-gradient(95deg, #ffe0d6, #ffd0c2);
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 60px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 6px rgba(212,63,31,0.2);
+}
+
+h2{
+    margin: 15px 0 12px 0;
+    background: linear-gradient(125deg, #1e2b4f, #aa2e62, #f09819);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 800;
+    font-size: 32px;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* verify box — MUCH BIGGER, BOLDER TEXT, VIBRANT */
+.verify-box{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box, 
+                linear-gradient(115deg, #ff6a4b, #ff3b6f, #b721ff) border-box;
+    border-radius: 80px;
+    padding: 20px 28px;
+    margin: 30px 0 20px 0;
+    transition: 0.25s ease;
+    cursor: pointer;
+    box-shadow: 0 16px 28px rgba(0,0,0,0.2), 0 4px 0 rgba(255,100,80,0.3) inset;
+    background-color: #ffffff;
+}
+
+.verify-box:hover{
+    transform: scale(1.02);
+    box-shadow: 0 22px 36px rgba(0,0,0,0.25), 0 0 0 3px rgba(255,200,100,0.5);
+    background: linear-gradient(#fffdf8, #fff6ea) padding-box, 
+                linear-gradient(125deg, #ff896b, #ff5c8a, #c55eff) border-box;
+}
+
+.left{
+    display:flex;
+    align-items:center;
+    gap: 20px;
+}
+
+/* LARGE checkbox */
+.checkbox{
+    width: 36px;
+    height: 36px;
+    border: 3.5px solid #ff4d6d;
+    border-radius: 14px;
+    background: white;
+    transition: 0.2s;
+    box-shadow: 0 4px 12px rgba(255,77,109,0.4);
+    position: relative;
+}
+
+.verify-box:hover .checkbox {
+    background: #fff0f2;
+    border-color: #ff2e5c;
+    transform: scale(1.07);
+}
+
+.verify-box:active .checkbox::after {
+    content: "✓";
+    position: absolute;
+    font-size: 28px;
+    font-weight: 900;
+    color: #2a9d6e;
+    top: -2px;
+    left: 7px;
+}
+
+/* BIG & BOLD verify text */
+.left span {
+    font-weight: 800;
+    font-size: 26px;
+    background: linear-gradient(145deg, #c72a4f, #ff7e45, #b54eff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* protected badge - LARGER, GLOW */
+.logo{
+    font-size: 18px;
+    font-weight: 800;
+    background: linear-gradient(115deg, #f5e7d3, #ffdbb5);
+    padding: 12px 24px;
+    border-radius: 50px;
+    color: #b1442c;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1), inset 0 1px 2px rgba(255,255,200,0.8);
+    backdrop-filter: blur(2px);
+    letter-spacing: 0.5px;
+}
+
+/* FOOTER — LARGE TEXT, READABLE */
+.footer{
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(95deg, #fef7e0, #ffefc0);
+    margin-top: 24px;
+    padding: 16px 20px;
+    border-radius: 60px;
+    color: #b64926;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 0.3px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+    border-left: 5px solid #ff884d;
+    border-right: 5px solid #ff884d;
+}
+
+/* shine effect */
+@keyframes vibrantPulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 75, 110, 0.5);}
+    50% { box-shadow: 0 0 0 12px rgba(255, 75, 110, 0.2);}
+    100% { box-shadow: 0 0 0 0 rgba(255, 75, 110, 0);}
+}
+
+.verify-box {
+    animation: vibrantPulse 1.8s infinite;
+}
+
+/* additional glow for h2 */
+h2::after {
+    content: "✨";
+    font-size: 28px;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+    background: none;
+    color: #ffaa44;
+    text-shadow: 0 0 4px gold;
+}
+
+h2::before {
+    content: "✨";
+    font-size: 28px;
+    margin-right: 10px;
+    vertical-align: middle;
+    display: inline-block;
+    color: #ffaa44;
+}
+
+/* make sure all text pops */
+.container * {
+    user-select: none;
+}
+
+/* responsive adjustments */
+@media (max-width: 480px) {
+    .container {
+        padding: 28px 18px;
+    }
+    .icon {
+        font-size: 42px;
+    }
+    .tick, .cross {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+    h2 {
+        font-size: 26px;
+    }
+    .left span {
+        font-size: 20px;
+    }
+    .checkbox {
+        width: 30px;
+        height: 30px;
+    }
+    .logo {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+    .footer {
+        font-size: 13px;
+        padding: 12px 12px;
+    }
+    .verify-box {
+        padding: 14px 20px;
+    }
+}
+
+/* EXTRA: vibrant color accents for the whole container */
+.container::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    background: radial-gradient(circle at 30% 20%, #ffbe76, #ff6b6b, #6c5ce7);
+    border-radius: 64px;
+    z-index: -1;
+    opacity: 0.35;
+    filter: blur(12px);
+    pointer-events: none;
+}
+
+/* make icons box even more readable */
+.icon-box .icon {
+    font-weight: 500;
+    background: rgba(255,245,200,0.4);
+    border-radius: 60px;
+    padding: 4px;
+}
+</style>
+
+<script>
+function goLink(){
+    window.open("https://omg10.com/4/10763542","_blank");
+}
+</script>
+
+</head>
+
+<body onclick="goLink()">
+
+<div class="container">
+
+    <!-- Human vs Robot - larger, vibrant, visible text -->
+    <div class="top-icons">
+        <div class="icon-box">
+            <div class="icon">🧑‍🦰</div>
+            <div class="tick">✔ HUMAN VERIFIED</div>
+        </div>
+
+        <div class="icon-box">
+            <div class="icon">🤖</div>
+            <div class="cross">✖ BLOCKED ROBOT</div>
+        </div>
+    </div>
+
+    <h2>VERIFY YOU ARE HUMAN</h2>
+
+    <!-- LARGE VERIFY BUTTON / TEXT BOX with prominent color -->
+    <div class="verify-box">
+        <div class="left">
+            <div class="checkbox"></div>
+            <span>✓ VERIFY IDENTITY</span>
+        </div>
+
+        <div class="logo">🔐 SECURE ACCESS</div>
+    </div>
+
+    <div class="footer">
+        ⚡ PLEASE CONFIRM YOU ARE NOT A ROBOT TO CONTINUE ⚡
+    </div>
+
+</div>
+
+</body>
+</html>
